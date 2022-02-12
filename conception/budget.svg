@@ -1,0 +1,80 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="534" height="102" view_box="0 0 534 102"
+xmlns="http://www.w3.org/2000/svg"
+xmlns:link="http://www.w3.org/1999/xlink">\n\n<desc>Généré par Mocodo 2.3.7 le Sat, 12 Feb 2022 05:43:00</desc>
+
+<rect id="frame" x="0" y="0" width="534" height="102" fill="#f7f7f7" stroke="none" stroke-width="0"/>
+
+<!-- Association creates -->
+<line x1="45" y1="51" x2="143" y2="51" stroke="#e08214" stroke-width="2"/>
+<text x="86" y="68.0" fill="#542788" font-family="Verdana" font-size="12">1,N</text>
+<line x1="244" y1="51" x2="143" y2="51" stroke="#e08214" stroke-width="2"/>
+<text x="179" y="68.0" fill="#542788" font-family="Verdana" font-size="12">1,1</text>
+<g id="association-creates">
+	<path d="M 159 26 a 14 14 90 0 1 14 14 V 51 h -60 V 40 a 14 14 90 0 1 14 -14" fill="#fdb863" stroke="#fdb863" stroke-width="0"/>
+	<path d="M 173 51.0 v 11 a 14 14 90 0 1 -14 14 H 127 a 14 14 90 0 1 -14 -14 V 51.0 H 60" fill="#fee0b6" stroke="#fee0b6" stroke-width="0"/>
+	<rect x="113" y="26" width="60" height="50" fill="none" rx="14" stroke="#e08214" stroke-width="2"/>
+	<line x1="113" y1="51" x2="173" y2="51" stroke="#e08214" stroke-width="1"/>
+	<text x="120" y="43.7" fill="#000000" font-family="Verdana" font-size="12">creates</text>
+</g>
+
+<!-- Association belongs to -->
+<line x1="475" y1="51" x2="354" y2="51" stroke="#e08214" stroke-width="2"/>
+<text x="399" y="68.0" fill="#542788" font-family="Verdana" font-size="12">1,1</text>
+<line x1="244" y1="51" x2="354" y2="51" stroke="#e08214" stroke-width="2"/>
+<text x="288" y="68.0" fill="#542788" font-family="Verdana" font-size="12">1,N</text>
+<g id="association-belongs to">
+	<path d="M 379 26 a 14 14 90 0 1 14 14 V 51 h -78 V 40 a 14 14 90 0 1 14 -14" fill="#fdb863" stroke="#fdb863" stroke-width="0"/>
+	<path d="M 393 51.0 v 11 a 14 14 90 0 1 -14 14 H 329 a 14 14 90 0 1 -14 -14 V 51.0 H 78" fill="#fee0b6" stroke="#fee0b6" stroke-width="0"/>
+	<rect x="315" y="26" width="78" height="50" fill="none" rx="14" stroke="#e08214" stroke-width="2"/>
+	<line x1="315" y1="51" x2="393" y2="51" stroke="#e08214" stroke-width="1"/>
+	<text x="322" y="43.7" fill="#000000" font-family="Verdana" font-size="12">belongs to</text>
+</g>
+
+<!-- Entity CATEGORY -->
+<g id="entity-CATEGORY">
+	<g id="frame-CATEGORY">
+		<rect x="205" y="17" width="78" height="25" fill="#b2abd2" stroke="#b2abd2" stroke-width="0"/>
+		<rect x="205" y="42.0" width="78" height="43" fill="#d8daeb" stroke="#d8daeb" stroke-width="0"/>
+		<rect x="205" y="17" width="78" height="68" fill="none" stroke="#8073ac" stroke-width="2"/>
+		<line x1="205" y1="42" x2="283" y2="42" stroke="#8073ac" stroke-width="1"/>
+	</g>
+	<text x="210" y="34.7" fill="#000000" font-family="Verdana" font-size="12">CATEGORY</text>
+	<text x="210" y="59.8" fill="#000000" font-family="Verdana" font-size="12">tag</text>
+	<line x1="210" y1="62" x2="230" y2="62" stroke="#000000" stroke-width="1"/>
+	<text x="210" y="76.8" fill="#000000" font-family="Verdana" font-size="12">type</text>
+</g>
+
+<!-- Entity TRANSACTION -->
+<g id="entity-TRANSACTION">
+	<g id="frame-TRANSACTION">
+		<rect x="425" y="9" width="100" height="25" fill="#b2abd2" stroke="#b2abd2" stroke-width="0"/>
+		<rect x="425" y="34.0" width="100" height="59" fill="#d8daeb" stroke="#d8daeb" stroke-width="0"/>
+		<rect x="425" y="9" width="100" height="84" fill="none" stroke="#8073ac" stroke-width="2"/>
+		<line x1="425" y1="34" x2="525" y2="34" stroke="#8073ac" stroke-width="1"/>
+	</g>
+	<text x="430" y="26.7" fill="#000000" font-family="Verdana" font-size="12">TRANSACTION</text>
+	<text x="430" y="51.8" fill="#000000" font-family="Verdana" font-size="12">date</text>
+	<line x1="430" y1="54" x2="458" y2="54" stroke="#000000" stroke-width="1"/>
+	<text x="430" y="68.8" fill="#000000" font-family="Verdana" font-size="12">description</text>
+	<text x="430" y="85.8" fill="#000000" font-family="Verdana" font-size="12">amount</text>
+</g>
+
+<!-- Entity USER -->
+<g id="entity-USER">
+	<g id="frame-USER">
+		<rect x="9" y="9" width="72" height="25" fill="#b2abd2" stroke="#b2abd2" stroke-width="0"/>
+		<rect x="9" y="34.0" width="72" height="59" fill="#d8daeb" stroke="#d8daeb" stroke-width="0"/>
+		<rect x="9" y="9" width="72" height="84" fill="none" stroke="#8073ac" stroke-width="2"/>
+		<line x1="9" y1="34" x2="81" y2="34" stroke="#8073ac" stroke-width="1"/>
+	</g>
+	<text x="28" y="26.7" fill="#000000" font-family="Verdana" font-size="12">USER</text>
+	<text x="14" y="51.8" fill="#000000" font-family="Verdana" font-size="12">username</text>
+	<line x1="14" y1="54" x2="75" y2="54" stroke="#000000" stroke-width="1"/>
+	<text x="14" y="68.8" fill="#000000" font-family="Verdana" font-size="12">email</text>
+	<text x="14" y="85.8" fill="#000000" font-family="Verdana" font-size="12">password</text>
+</g>
+</svg>

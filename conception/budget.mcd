@@ -1,0 +1,5 @@
+USER: username, email, password
+creates, 1N USER, 11 CATEGORY
+CATEGORY: tag, type
+belongs to, 11 TRANSACTION, 1N CATEGORY
+TRANSACTION: date, description, amount
