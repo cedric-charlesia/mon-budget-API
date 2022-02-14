@@ -11,10 +11,11 @@ class User {
 
     async save() {
         try {
+            const email = await this.email.toLowerCase();
             const password = await bcrypt.hash(this.password, 10);
             const { rows } = await client.query('INSERT INTO "user"(username, email, password) VALUES($1, $2, $3) RETURNING id', [
                 this.username,
-                this.email,
+                email,
                 password
             ]);
             this.id = rows[0].id;
@@ -30,7 +31,7 @@ class User {
 
     async login() {
         try {
-            const { rows } = await client.query('SELECT * FROM "user" WHERE email=$1', [this.email]);
+            const { rows } = await client.query('SELECT * FROM "user" WHERE email=$1', [this.email.toLowerCase()]);
 
             if (!rows[0]) throw new Error('Identification failed');
 
@@ -47,6 +48,19 @@ class User {
                 throw new Error(error.detail);
             }
             throw error;
+        }
+    };
+
+    static async findByEmail(id) {
+        const { rows } = await client.query('SELECT * FROM "user" WHERE id=$1', [id]);
+
+        if (rows[0] && (id === rows[0].id)) {
+            const user = new User(rows[0]);
+            Reflect.deleteProperty(user, 'password');
+            return user;
+        }
+        else {
+            return null;
         }
     };
 

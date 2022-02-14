@@ -1,7 +1,7 @@
-const { request, response } = require('express');
 const User = require('../models/user');
+const jwt = require('../services/jwt');
 
-exports.register = async (request, response) => {
+exports.signup = async (request, response) => {
 
     const user = new User(request.body);
 
@@ -17,8 +17,33 @@ exports.register = async (request, response) => {
 exports.login = async (request, response) => {
     try {
         const user = await new User(request.body).login();
+
+        const token = jwt.makeToken(user.id);
+        response.setHeader("Access-Control-Expose-Headers", [
+            "Authorization"
+        ]);
+        response.setHeader('Authorization', token);
+
         response.status(200).json(user);
     } catch (error) {
         response.status(500).json(error.message);
+    }
+}
+
+exports.findByEmail = async (request, response) => {
+
+    if (request.userId) {
+
+        const id = parseInt(request.userId, 10);
+        const routeId = parseInt(request.params.userId, 10);
+
+        if (id === routeId) {
+            const user = await User.findByEmail(id);
+            response.json(user);
+        }
+        else {
+            console.log(`No user found for id ${id}`);
+            return response.status(400).json('Error, no user found')
+        }
     }
 }
