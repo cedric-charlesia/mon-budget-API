@@ -4,6 +4,12 @@ const userController = require('./controllers/userController');
 
 const router = express.Router();
 
-router.post('/register', userController.registerUser);
+const registerSchema = require('./schemas/registerSchema');
+const loginSchema = require('./schemas/loginSchema');
+
+const { validateBody }= require('./middlewares/validator');
+
+router.post('/register', validateBody(registerSchema), userController.register);
+router.post('/login', validateBody(loginSchema), userController.login);
 
 module.exports = router;

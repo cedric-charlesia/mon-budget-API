@@ -6,8 +6,7 @@ CREATE TABLE "user" (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     username TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
-    "password" TEXT NOT NULL,
-    CHECK (LENGTH("password") >= 8)
+    "password" TEXT NOT NULL
 );
 
 CREATE TABLE "category" (
