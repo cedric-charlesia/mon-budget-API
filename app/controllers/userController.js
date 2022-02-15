@@ -28,7 +28,7 @@ exports.login = async (request, response) => {
     } catch (error) {
         response.status(500).json(error.message);
     }
-}
+};
 
 exports.findByEmail = async (request, response) => {
 
@@ -39,4 +39,22 @@ exports.findByEmail = async (request, response) => {
         response.json(user);
 
     }
-}
+};
+
+exports.update = async (request, response) => {
+    const id = parseInt(request.userId, 10);
+
+    const user = new User(request.body);
+    user.id = id;
+    try {
+        await user.update();
+
+        // Removing password before sending object to controller
+        Reflect.deleteProperty(user, 'password');
+
+        response.status(200).json(user);
+        
+    } catch (error) {
+        response.status(500).json(error.message);
+    }
+};

@@ -41,7 +41,7 @@ class User {
 
             const user = new User(rows[0]);
             Reflect.deleteProperty(user, 'password');
-            return user;            
+            return user;
 
         } catch (error) {
             if (error.detail) {
@@ -63,6 +63,26 @@ class User {
             return null;
         }
     };
+
+    async update() {
+        try {
+            const email = await this.email.toLowerCase();
+            const password = await bcrypt.hash(this.password, 10);
+
+            const { rows } = await client.query(`UPDATE "user" SET username=$1, email=$2, password=$3 WHERE id=$4 RETURNING *`, [
+                this.username,
+                email,
+                password,
+                this.id
+            ]);
+            return rows[0];
+        } catch (error) {
+            if (error.detail) {
+                throw new Error(error.detail);
+            }
+            throw error;
+        }
+    }
 
 }
 
