@@ -51,17 +51,38 @@ class User {
         }
     };
 
-    static async findByEmail(id) {
-        const { rows } = await client.query('SELECT * FROM "user" WHERE id=$1', [id]);
+    static async findById(id) {
+        try {
+            const { rows } = await client.query('SELECT * FROM "user" WHERE id=$1', [id]);
 
-        if (rows[0] && (id === rows[0].id)) {
-            const user = new User(rows[0]);
-            Reflect.deleteProperty(user, 'password');
-            return user;
+            if (rows[0] && (id === rows[0].id)) {
+                const user = new User(rows[0]);
+                Reflect.deleteProperty(user, 'password');
+                return user;
+            }
+        } catch (error) {
+            if (error.detail) {
+                throw new Error(error.detail);
+            }
+            throw (error);
         }
-        else {
-            return null;
+        
+    };
+
+    async findByEmail(email) {
+        try {
+            const { rows } = await client.query('SELECT * FROM "user" WHERE email=$1', [email]);
+
+            if (rows[0]) {
+                return new User(rows[0]);
+            }
+        } catch (error) {
+            if (error.detail) {
+                throw new Error(error.detail);
+            }
+            throw (error);
         }
+        
     };
 
     async update() {
@@ -79,6 +100,17 @@ class User {
         } catch (error) {
             if (error.detail) {
                 throw new Error(error.detail);
+            }
+            throw error;
+        }
+    };
+
+    async delete() {
+        try {
+            await client.query(`DELETE FROM "user" WHERE id=$1`, [this.id]);
+        } catch (error) {
+            if (error.detail) {
+                throw new Error('Something went wrong when deleting the user' + error.detail);
             }
             throw error;
         }

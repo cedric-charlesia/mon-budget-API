@@ -5,6 +5,12 @@ exports.signup = async (request, response) => {
 
     const user = new User(request.body);
 
+    const { email } = user;
+    const validEmail = await user.findByEmail(email);
+    if (validEmail) {
+        return response.status(403).json('This email has already been used');
+    }
+
     try {
         await user.save();
         response.status(201).json(user);
@@ -30,19 +36,31 @@ exports.login = async (request, response) => {
     }
 };
 
-exports.findByEmail = async (request, response) => {
+exports.findById = async (request, response) => {
 
     if (request.userId) {
 
         const id = parseInt(request.userId, 10);
-        const user = await User.findByEmail(id);
+        const user = await User.findById(id);
         response.json(user);
 
     }
 };
 
+exports.verifyToken = async (request, response) => {
+    try {
+        const idTokenAccess = parseInt(request.userId);
+        const user = await User.findById(idTokenAccess);
+        response.status(200).json(user);
+
+    } catch (error) {
+        console.log(error);
+        response.status(500).json(error.message);
+    }
+};
+
 exports.update = async (request, response) => {
-    const id = parseInt(request.userId, 10);
+    const id = parseInt(request.params.userId, 10);
 
     const user = new User(request.body);
     user.id = id;
@@ -52,8 +70,21 @@ exports.update = async (request, response) => {
         // Removing password before sending object to controller
         Reflect.deleteProperty(user, 'password');
 
-        response.status(200).json(user);
-        
+        response.status(200).json("Profile updated");
+
+    } catch (error) {
+        response.status(500).json(error.message);
+    }
+};
+
+exports.delete = async (request, response) => {
+
+    try {
+        const id = parseInt(request.params.userId, 10);
+        await new User({ id }).delete();
+
+        response.status(200).json("User deleted");
+
     } catch (error) {
         response.status(500).json(error.message);
     }
