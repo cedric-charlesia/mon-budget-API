@@ -1,7 +1,6 @@
 const client = require('../database');
-const bcrypt = require('bcryptjs');
 
-class User {
+class Category {
 
     constructor(obj = {}) {
         for (const propName in obj) {
@@ -9,41 +8,17 @@ class User {
         }
     };
 
-    async save() {
+    async save(userId) {
         try {
-            const email = await this.email.toLowerCase();
-            const password = await bcrypt.hash(this.password, 10);
-            const { rows } = await client.query('INSERT INTO "user"(username, email, password) VALUES($1, $2, $3) RETURNING id', [
-                this.username,
-                email,
-                password
+            const { rows } = await client.query('INSERT INTO "category"(tag, type, user_id) VALUES($1, $2, $3) RETURNING id', [
+                this.tag,
+                this.type,
+                userId
             ]);
             this.id = rows[0].id;
         } catch (error) {
             if (error.detail) {
-                throw new Error('Something went wrong when registrering the user' + error.detail);
-            }
-            throw error;
-        }
-    };
-
-    async login() {
-        try {
-            const { rows } = await client.query('SELECT * FROM "user" WHERE email=$1', [this.email.toLowerCase()]);
-
-            if (!rows[0]) throw new Error('Identification failed');
-
-            const isPwdValid = await bcrypt.compare(this.password, rows[0].password);
-
-            if (!isPwdValid) throw new Error('Invalid password');
-
-            const user = new User(rows[0]);
-            Reflect.deleteProperty(user, 'password');
-            return user;
-
-        } catch (error) {
-            if (error.detail) {
-                throw new Error(error.detail);
+                throw new Error('Something went wrong when registrering the category' + error.detail);
             }
             throw error;
         }
@@ -57,22 +32,6 @@ class User {
                 const user = new User(rows[0]);
                 Reflect.deleteProperty(user, 'password');
                 return user;
-            }
-        } catch (error) {
-            if (error.detail) {
-                throw new Error(error.detail);
-            }
-            throw (error);
-        }
-        
-    };
-
-    async findByEmail(email) {
-        try {
-            const { rows } = await client.query('SELECT * FROM "user" WHERE email=$1', [email]);
-
-            if (rows[0]) {
-                return new User(rows[0]);
             }
         } catch (error) {
             if (error.detail) {
@@ -116,4 +75,4 @@ class User {
 
 }
 
-module.exports = User;
+module.exports = Category;

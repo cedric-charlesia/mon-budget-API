@@ -3,6 +3,7 @@ const router = express.Router();
 
 // CONTROLLERS
 const userController = require('./controllers/userController');
+const categoryController = require('./controllers/categoryController');
 
 // MIDDLEWARES
 const jwtMW = require('./middlewares/jwtMW');
@@ -19,12 +20,8 @@ router.get('/', (request, response) => {
 })
 
 // USER ROUTES
-router.get('/signup', (_, response) => {
-    response.json('Register page!')
-})
-router.get('/login', (_, response) => {
-    response.json('Login page!')
-})
+router.get('/signup', (_, response) => { response.json('Register page!') })
+router.get('/login', (_, response) => { response.json('Login page!') })
 
 router.post('/signup', validateBody(schema.register), userController.signup);
 router.post('/login', validateBody(schema.login), userController.login);
@@ -34,5 +31,8 @@ router.get('/tokenaccess', jwtMW, userController.verifyToken);
 
 router.patch('/user/:userId(\\d+)', jwtMW, userMW, validateBody(schema.register), userController.update);
 router.delete('/user/:userId(\\d+)', jwtMW, userMW, userController.delete);
+
+// CATEGORIES ROUTES
+router.post('/user/:userId(\\d+)/categories', jwtMW, userMW, validateBody(schema.category), categoryController.addCategory);
 
 module.exports = router;

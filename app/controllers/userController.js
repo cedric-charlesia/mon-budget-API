@@ -15,7 +15,7 @@ exports.signup = async (request, response) => {
         await user.save();
         response.status(201).json(user);
     } catch (error) {
-
+        response.status(500).json(error.message);
     }
 
 };

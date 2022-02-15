@@ -12,7 +12,7 @@ const register = {
     },
     required: ["username", "email", "password"],
     additionalProperties: false
-}
+};
 
 const login = {
     type: "object",
@@ -25,7 +25,19 @@ const login = {
     },
     required: ["email", "password"],
     additionalProperties: false
+};
+
+const category = {
+    type: "object",
+    properties: {
+        tag: { type: "string" },
+        type: { type: "string" },
+        user_id: { type: "integer" },
+    },
+    required: ["tag", "type", "user_id"],
+    additionalProperties: false
 }
 
 exports.register = register;
 exports.login = login;
+exports.category = category;
