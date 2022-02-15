@@ -6,17 +6,21 @@ const userController = require('./controllers/userController');
 
 // MIDDLEWARES
 const jwtMW = require('./middlewares/jwtMW');
+const userMW = require('./middlewares/userMW');
 
 // SCHEMAS
-const registerSchema = require('./schemas/registerSchema');
-const loginSchema = require('./schemas/loginSchema');
+const schema = require('./schemas/schema');
 
 const { validateBody }= require('./middlewares/validator');
 
 // ROUTES
-router.post('/signup', validateBody(registerSchema), userController.signup);
-router.post('/login', validateBody(loginSchema), userController.login);
+router.get('/', (request, response) => {
+    response.json('Welcome to "Mon budget" API!')
+})
 
-router.get('/user/:userId(\\d+)', jwtMW, userController.findByEmail);
+router.post('/signup', validateBody(schema.register), userController.signup);
+router.post('/login', validateBody(schema.login), userController.login);
+
+router.get('/user/:userId(\\d+)', jwtMW, userMW, userController.findByEmail);
 
 module.exports = router;

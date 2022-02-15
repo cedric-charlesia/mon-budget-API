@@ -35,15 +35,8 @@ exports.findByEmail = async (request, response) => {
     if (request.userId) {
 
         const id = parseInt(request.userId, 10);
-        const routeId = parseInt(request.params.userId, 10);
+        const user = await User.findByEmail(id);
+        response.json(user);
 
-        if (id === routeId) {
-            const user = await User.findByEmail(id);
-            response.json(user);
-        }
-        else {
-            console.log(`No user found for id ${id}`);
-            return response.status(400).json('Error, no user found')
-        }
     }
 }

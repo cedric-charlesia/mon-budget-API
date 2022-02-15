@@ -1,6 +1,6 @@
 const Ajv = require('ajv');
 
-const registerSchema = {
+const register = {
     type: "object",
     properties: {
         username: { type: "string" },
@@ -14,4 +14,18 @@ const registerSchema = {
     additionalProperties: false
 }
 
-module.exports = registerSchema;
+const login = {
+    type: "object",
+    properties: {
+        email: {
+            type: "string",
+            format: "email"
+        },
+        password: { type: "string" },
+    },
+    required: ["email", "password"],
+    additionalProperties: false
+}
+
+exports.register = register;
+exports.login = login;
