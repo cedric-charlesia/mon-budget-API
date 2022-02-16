@@ -10,7 +10,10 @@ class Category {
 
     async save(userId) {
         try {
-            const { rows } = await client.query('INSERT INTO "category"(tag, type, user_id) VALUES($1, $2, $3) RETURNING id', [
+            const { rows } = await client.query(`
+            INSERT INTO "category"(tag, type, user_id) 
+                SELECT $1, $2, $3 WHERE NOT EXISTS (
+                    SELECT * FROM "category" WHERE tag=$1 AND type=$2 AND user_id=$3) RETURNING id`, [
                 this.tag,
                 this.type,
                 userId

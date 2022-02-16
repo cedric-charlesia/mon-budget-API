@@ -13,7 +13,8 @@ CREATE TABLE "category" (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     tag TEXT NOT NULL,
     "type" TEXT NOT NULL,
-    user_id INT REFERENCES "user"(id)    
+    user_id INT REFERENCES "user"(id),
+    UNIQUE(tag, "type", user_id)    
 );
 
 CREATE TABLE "transaction" (

@@ -10,7 +10,7 @@ exports.addCategory = async (request, response) => {
         await category.save(userId);
         response.status(201).json(category);
     } catch (error) {
-        response.status(500).json(error.message);
+        response.status(500).json(`Impossible to save the category: ${error.message}`);
     }
 
 };
