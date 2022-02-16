@@ -1,4 +1,5 @@
 const client = require('../database');
+const { category } = require('../schemas/schema');
 
 class Category {
 
@@ -27,14 +28,29 @@ class Category {
         }
     };
 
-    static async findById(id) {
+    static async findAllCategories(userId) {
         try {
-            const { rows } = await client.query('SELECT * FROM "user" WHERE id=$1', [id]);
+            const { rows } = await client.query('SELECT * FROM "category" WHERE user_id=$1', [userId]);
 
-            if (rows[0] && (id === rows[0].id)) {
-                const user = new User(rows[0]);
-                Reflect.deleteProperty(user, 'password');
-                return user;
+            if (rows) return rows.map(row => new Category(row));
+            else return null;
+
+        } catch (error) {
+            if (error.detail) {
+                throw new Error(error.detail);
+            }
+            throw (error);
+        }
+        
+    };
+
+    static async findCategoryById(catId, userId) {
+        try {
+            const { rows } = await client.query('SELECT * FROM "category" WHERE id=$1 AND user_id=$2', [catId, userId]);
+
+            if (rows[0]) {
+                const category = new Category(rows[0]);
+                return category;
             }
         } catch (error) {
             if (error.detail) {
@@ -45,36 +61,35 @@ class Category {
         
     };
 
-    async update() {
+    async update(catId) {
         try {
-            const email = await this.email.toLowerCase();
-            const password = await bcrypt.hash(this.password, 10);
-
-            const { rows } = await client.query(`UPDATE "user" SET username=$1, email=$2, password=$3 WHERE id=$4 RETURNING *`, [
-                this.username,
-                email,
-                password,
-                this.id
+            const { rows } = await client.query(`UPDATE "category" SET tag=$1, type=$2, user_id=$3 WHERE id=$4 RETURNING *`, [
+                this.tag,
+                this.type,
+                this.userId,
+                catId
             ]);
             return rows[0];
+
         } catch (error) {
             if (error.detail) {
-                throw new Error(error.detail);
+                throw new Error('Something went wrong when updating the category' + error.detail);
             }
             throw error;
         }
     };
 
-    async delete() {
+    async delete(catId) {
         try {
-            await client.query(`DELETE FROM "user" WHERE id=$1`, [this.id]);
+            await client.query(`DELETE FROM "category" WHERE id=$1`, [catId]);
+
         } catch (error) {
             if (error.detail) {
-                throw new Error('Something went wrong when deleting the user' + error.detail);
+                throw new Error('Something went wrong when deleting the category' + error.detail);
             }
             throw error;
         }
-    }
+    };
 
 }
 

@@ -34,5 +34,10 @@ router.delete('/user/:userId(\\d+)', jwtMW, userMW, userController.delete);
 
 // CATEGORIES ROUTES
 router.post('/user/:userId(\\d+)/categories', jwtMW, userMW, validateBody(schema.category), categoryController.addCategory);
+router.get('/user/:userId(\\d+)/categories', jwtMW, userMW, categoryController.findAllCategories);
+router.get('/user/:userId(\\d+)/categories/:catId(\\d+)', jwtMW, userMW, categoryController.findCategoryById);
+
+router.patch('/user/:userId(\\d+)/categories/:catId(\\d+)', jwtMW, userMW, validateBody(schema.category), categoryController.update);
+router.delete('/user/:userId(\\d+)/categories/:catId(\\d+)', jwtMW, userMW, categoryController.delete);
 
 module.exports = router;

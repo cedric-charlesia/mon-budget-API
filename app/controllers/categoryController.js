@@ -15,29 +15,31 @@ exports.addCategory = async (request, response) => {
 
 };
 
-exports.findById = async (request, response) => {
+exports.findAllCategories = async (request, response) => {
 
-    if (request.userId) {
+    const userId = parseInt(request.userId, 10);
+    const categories = await Category.findAllCategories(userId);
+    response.json(categories);
 
-        const id = parseInt(request.userId, 10);
-        const user = await User.findById(id);
-        response.json(user);
+};
 
-    }
+exports.findCategoryById = async (request, response) => {
+
+    const catId = parseInt(request.params.catId, 10);
+    const userId = parseInt(request.userId, 10);
+
+    const category = await Category.findCategoryById(catId, userId);
+    response.json(category);
+
 };
 
 exports.update = async (request, response) => {
-    const id = parseInt(request.params.userId, 10);
 
-    const user = new User(request.body);
-    user.id = id;
     try {
-        await user.update();
+        const catId = parseInt(request.params.catId, 10);
+        await new Category(request.body).update(catId);
 
-        // Removing password before sending object to controller
-        Reflect.deleteProperty(user, 'password');
-
-        response.status(200).json("Profile updated");
+        response.status(200).json("Category updated");
 
     } catch (error) {
         response.status(500).json(error.message);
@@ -47,10 +49,10 @@ exports.update = async (request, response) => {
 exports.delete = async (request, response) => {
 
     try {
-        const id = parseInt(request.params.userId, 10);
-        await new User({ id }).delete();
+        const catId = parseInt(request.params.catId, 10);
+        await new Category().delete(catId);
 
-        response.status(200).json("User deleted");
+        response.status(200).json("Category deleted");
 
     } catch (error) {
         response.status(500).json(error.message);

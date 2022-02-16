@@ -97,7 +97,7 @@ class User {
             return rows[0];
         } catch (error) {
             if (error.detail) {
-                throw new Error(error.detail);
+                throw new Error('Something went wrong when updating the user profile' + error.detail);
             }
             throw error;
         }
