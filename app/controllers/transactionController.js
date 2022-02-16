@@ -1,14 +1,14 @@
-const Category = require('../models/category');
+const Transaction = require('../models/transaction');
 
-exports.addCategory = async (request, response) => {
+exports.addTransaction = async (request, response) => {
 
-    const category = new Category(request.body);
-    const userId = request.userId;
+    const transaction = new Transaction(request.body);
+    const catId = request.params.catId;
     try {
-        await category.save(userId);
-        response.status(201).json(category);
+        await transaction.save(catId);
+        response.status(201).json(transaction);
     } catch (error) {
-        response.status(500).json(`Category already exists. Impossible to save category: ${error.message}`);
+        response.status(500).json(error.message);
     }
 
 };

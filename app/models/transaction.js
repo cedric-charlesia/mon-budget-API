@@ -1,6 +1,6 @@
 const client = require('../database');
 
-class Category {
+class Transaction {
 
     constructor(obj = {}) {
         for (const propName in obj) {
@@ -8,22 +8,18 @@ class Category {
         }
     };
 
-    async save(userId) {
+    async save(catId) {
         try {
-            const tag = await this.tag.toLowerCase();
-            const type = await this.type.toLowerCase();
-            const { rows } = await client.query(`
-            INSERT INTO "category"(tag, type, user_id) 
-                SELECT $1, $2, $3 WHERE NOT EXISTS (
-                    SELECT * FROM "category" WHERE tag=$1 AND type=$2 AND user_id=$3) RETURNING id`, [
-                tag,
-                type,
-                userId
+            const { rows } = await client.query('INSERT INTO "transaction"(date, description, amount, category_id) VALUES($1, $2, $3, $4) RETURNING id', [
+                this.date,
+                this.description,
+                this.amount,
+                catId
             ]);
             this.id = rows[0].id;
         } catch (error) {
             if (error.detail) {
-                throw new Error('Something went wrong when registrering the category' + error.detail);
+                throw new Error('Something went wrong when registrering the transaction' + error.detail);
             }
             throw error;
         }
@@ -96,4 +92,4 @@ class Category {
 
 }
 
-module.exports = Category;
+module.exports = Transaction;

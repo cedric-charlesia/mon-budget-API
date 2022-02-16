@@ -21,7 +21,7 @@ CREATE TABLE "transaction" (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "date" DATE NOT NULL,
     "description" TEXT,
-    amount INT NOT NULL,
+    amount NUMBER NOT NULL,
     category_id INT REFERENCES category(id)   
 );
 

@@ -38,6 +38,22 @@ const category = {
     additionalProperties: false
 }
 
+const transaction = {
+    type: "object",
+    properties: {
+        date: {
+            type: "string",
+            format: "date"
+        },
+        description: { type: "string" },
+        amount: { type: "number" },
+        category_id: { type: "integer" },
+    },
+    required: ["date", "amount", "category_id"],
+    additionalProperties: false
+}
+
 exports.register = register;
 exports.login = login;
 exports.category = category;
+exports.transaction = transaction;

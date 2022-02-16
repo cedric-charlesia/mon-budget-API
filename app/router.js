@@ -4,6 +4,7 @@ const router = express.Router();
 // CONTROLLERS
 const userController = require('./controllers/userController');
 const categoryController = require('./controllers/categoryController');
+const transactionController = require('./controllers/transactionController');
 
 // MIDDLEWARES
 const jwtMW = require('./middlewares/jwtMW');
@@ -14,7 +15,7 @@ const schema = require('./schemas/schema');
 
 const { validateBody }= require('./middlewares/validator');
 
-// ROUTES
+// HOME ROUTE
 router.get('/', (request, response) => {
     response.json('Welcome to "Mon budget" API!')
 })
@@ -39,5 +40,8 @@ router.get('/user/:userId(\\d+)/categories/:catId(\\d+)', jwtMW, userMW, categor
 
 router.patch('/user/:userId(\\d+)/categories/:catId(\\d+)', jwtMW, userMW, validateBody(schema.category), categoryController.update);
 router.delete('/user/:userId(\\d+)/categories/:catId(\\d+)', jwtMW, userMW, categoryController.delete);
+
+// TRANSACTIONS ROUTES
+router.post('/user/:userId(\\d+)/categories/:catId(\\d+)/transactions', jwtMW, userMW, validateBody(schema.transaction), transactionController.addTransaction);
 
 module.exports = router;
