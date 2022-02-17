@@ -42,7 +42,7 @@ class Category {
             }
             throw (error);
         }
-        
+
     };
 
     static async findCategoryById(catId, userId) {
@@ -59,7 +59,7 @@ class Category {
             }
             throw (error);
         }
-        
+
     };
 
     async update(catId) {
@@ -72,7 +72,8 @@ class Category {
                 this.userId,
                 catId
             ]);
-            return rows[0];
+            if (rows[0] !== undefined) return rows[0];
+            else return null
 
         } catch (error) {
             if (error.detail) {
@@ -84,7 +85,11 @@ class Category {
 
     async delete(catId) {
         try {
-            await client.query(`DELETE FROM "category" WHERE id=$1`, [catId]);
+            const { rows } = await client.query(`SELECT * FROM "category" WHERE id=$1`, [catId]);
+            if (rows[0]) {
+                await client.query(`DELETE FROM "category" WHERE id=$1`, [catId]);
+            }
+            else return null;
 
         } catch (error) {
             if (error.detail) {

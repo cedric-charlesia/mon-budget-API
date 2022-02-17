@@ -64,7 +64,7 @@ class User {
             }
             throw (error);
         }
-        
+
     };
 
     async findByEmail(email) {
@@ -80,7 +80,7 @@ class User {
             }
             throw (error);
         }
-        
+
     };
 
     async update() {
@@ -105,7 +105,12 @@ class User {
 
     async delete() {
         try {
-            await client.query(`DELETE FROM "user" WHERE id=$1`, [this.id]);
+            const { rows } = await client.query(`SELECT * FROM "user" WHERE id=$1`, [this.id]);
+            if (rows[0]) {
+                await client.query(`DELETE FROM "user" WHERE id=$1`, [this.id]);
+            }
+            else return null;
+
         } catch (error) {
             if (error.detail) {
                 throw new Error('Something went wrong when deleting the user' + error.detail);

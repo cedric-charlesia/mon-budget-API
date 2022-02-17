@@ -13,7 +13,7 @@ CREATE TABLE "category" (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     tag TEXT NOT NULL,
     "type" TEXT NOT NULL,
-    user_id INT REFERENCES "user"(id),
+    user_id INT REFERENCES "user"(id) ON DELETE CASCADE,
     UNIQUE(tag, "type", user_id)    
 );
 
@@ -21,8 +21,8 @@ CREATE TABLE "transaction" (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "date" DATE NOT NULL,
     "description" TEXT,
-    amount NUMBER NOT NULL,
-    category_id INT REFERENCES category(id)   
+    amount NUMERIC NOT NULL,
+    category_id INT REFERENCES category(id)
 );
 
 COMMIT;

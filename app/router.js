@@ -43,5 +43,7 @@ router.delete('/user/:userId(\\d+)/categories/:catId(\\d+)', jwtMW, userMW, cate
 
 // TRANSACTIONS ROUTES
 router.post('/user/:userId(\\d+)/categories/:catId(\\d+)/transactions', jwtMW, userMW, validateBody(schema.transaction), transactionController.addTransaction);
+router.patch('/user/:userId(\\d+)/categories/:catId(\\d+)/transactions/:transactionId(\\d+)', jwtMW, userMW, validateBody(schema.transaction), transactionController.update);
+router.delete('/user/:userId(\\d+)/categories/:catId(\\d+)/transactions/:transactionId(\\d+)', jwtMW, userMW, transactionController.delete);
 
 module.exports = router;

@@ -35,9 +35,13 @@ exports.update = async (request, response) => {
 
     try {
         const catId = parseInt(request.params.catId, 10);
-        await new Category(request.body).update(catId);
+        const transactionId = parseInt(request.params.transactionId, 10);
+        const transaction = await new Transaction(request.body).update(catId, transactionId);
 
-        response.status(200).json("Category updated");
+        if (transaction === null) {
+            response.status(400).json(`No transaction found for this id ${transactionId}`)
+        }
+        else { response.status(200).json("Transaction updated"); }
 
     } catch (error) {
         response.status(500).json(error.message);
@@ -47,10 +51,14 @@ exports.update = async (request, response) => {
 exports.delete = async (request, response) => {
 
     try {
+        const transactionId = parseInt(request.params.transactionId, 10);
         const catId = parseInt(request.params.catId, 10);
-        await new Category().delete(catId);
+        const transaction = await new Transaction().delete(transactionId, catId);
 
-        response.status(200).json("Category deleted");
+        if (transaction === null) {
+            response.status(400).json(`No transaction found for this id ${transactionId}`)
+        }
+        else { response.status(200).json("Transaction deleted"); }
 
     } catch (error) {
         response.status(500).json(error.message);

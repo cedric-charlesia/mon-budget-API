@@ -10,7 +10,10 @@ class Transaction {
 
     async save(catId) {
         try {
-            const { rows } = await client.query('INSERT INTO "transaction"(date, description, amount, category_id) VALUES($1, $2, $3, $4) RETURNING id', [
+            const { rows } = await client.query(`
+            INSERT INTO "transaction"("date", description, amount, category_id) 
+                SELECT $1, $2, $3, $4 WHERE NOT EXISTS (
+                    SELECT * FROM "transaction" WHERE "date"=$1 AND "description"=$2 AND amount=$3 AND category_id=$4) RETURNING id`, [
                 this.date,
                 this.description,
                 this.amount,
@@ -38,7 +41,7 @@ class Transaction {
             }
             throw (error);
         }
-        
+
     };
 
     static async findCategoryById(catId, userId) {
@@ -55,20 +58,21 @@ class Transaction {
             }
             throw (error);
         }
-        
+
     };
 
-    async update(catId) {
+    async update(catId, transactionId) {
         try {
-            const tag = await this.tag.toLowerCase();
-            const type = await this.type.toLowerCase();
-            const { rows } = await client.query(`UPDATE "category" SET tag=$1, type=$2, user_id=$3 WHERE id=$4 RETURNING *`, [
-                tag,
-                type,
-                this.userId,
-                catId
+            const description = await this.description.toLowerCase();
+            const { rows } = await client.query(`UPDATE "transaction" SET date=$1, description=$2, amount=$3, category_id=$4 WHERE id=$5 RETURNING *`, [
+                this.date,
+                description,
+                this.amount,
+                catId,
+                transactionId
             ]);
-            return rows[0];
+            if (rows[0] !== undefined) return rows[0];
+            else return null
 
         } catch (error) {
             if (error.detail) {
@@ -78,13 +82,17 @@ class Transaction {
         }
     };
 
-    async delete(catId) {
+    async delete(transactionId, catId) {
         try {
-            await client.query(`DELETE FROM "category" WHERE id=$1`, [catId]);
+            const { rows } = await client.query(`SELECT * FROM "transaction" WHERE id=$1 `, [transactionId]);
+            if (rows[0]) {
+                await client.query(`DELETE FROM "transaction" WHERE id=$1 AND category_id=$2`, [transactionId, catId]);
+            }
+            else return null;
 
         } catch (error) {
             if (error.detail) {
-                throw new Error('Something went wrong when deleting the category' + error.detail);
+                throw new Error('Something went wrong when deleting the transaction' + error.detail);
             }
             throw error;
         }

@@ -81,9 +81,12 @@ exports.delete = async (request, response) => {
 
     try {
         const id = parseInt(request.params.userId, 10);
-        await new User({ id }).delete();
+        const user = await new User({ id }).delete();
 
-        response.status(200).json("User deleted");
+        if (user === null) {
+            response.status(400).json(`No user found for this id ${id}`)
+        }
+        else { response.status(200).json("User deleted"); }
 
     } catch (error) {
         response.status(500).json(error.message);

@@ -35,9 +35,12 @@ exports.update = async (request, response) => {
 
     try {
         const catId = parseInt(request.params.catId, 10);
-        await new Category(request.body).update(catId);
+        const category = await new Category(request.body).update(catId);
 
-        response.status(200).json("Category updated");
+        if (category === null) {
+            response.status(400).json(`No category found for this id ${transactionId}`)
+        }
+        else {response.status(200).json("Category updated");}
 
     } catch (error) {
         response.status(500).json(error.message);
@@ -48,9 +51,12 @@ exports.delete = async (request, response) => {
 
     try {
         const catId = parseInt(request.params.catId, 10);
-        await new Category().delete(catId);
+        const category = await new Category().delete(catId);
 
-        response.status(200).json("Category deleted");
+        if (category === null) {
+            response.status(400).json(`No category found for this id ${catId}`)
+        }
+        else { response.status(200).json("Category deleted"); }
 
     } catch (error) {
         response.status(500).json(error.message);
