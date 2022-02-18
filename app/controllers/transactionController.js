@@ -13,21 +13,21 @@ exports.addTransaction = async (request, response) => {
 
 };
 
-exports.findAllCategories = async (request, response) => {
+exports.findAllTransactions = async (request, response) => {
 
-    const userId = parseInt(request.userId, 10);
-    const categories = await Category.findAllCategories(userId);
-    response.json(categories);
+    const catId = parseInt(request.params.catId, 10);
+    const transactions = await Transaction.findAllTransactions(catId);
+    response.json(transactions);
 
 };
 
-exports.findCategoryById = async (request, response) => {
+exports.findTransactionById = async (request, response) => {
 
+    const transactionId = parseInt(request.params.transactionId, 10);
     const catId = parseInt(request.params.catId, 10);
-    const userId = parseInt(request.userId, 10);
 
-    const category = await Category.findCategoryById(catId, userId);
-    response.json(category);
+    const transaction = await Transaction.findTransactionById(transactionId, catId);
+    response.json(transaction);
 
 };
 

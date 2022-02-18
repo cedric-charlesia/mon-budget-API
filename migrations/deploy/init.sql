@@ -22,7 +22,7 @@ CREATE TABLE "transaction" (
     "date" DATE NOT NULL,
     "description" TEXT,
     amount NUMERIC NOT NULL,
-    category_id INT REFERENCES category(id)
+    category_id INT REFERENCES category(id) ON DELETE CASCADE
 );
 
 COMMIT;

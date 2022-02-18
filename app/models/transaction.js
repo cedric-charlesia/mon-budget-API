@@ -28,11 +28,11 @@ class Transaction {
         }
     };
 
-    static async findAllCategories(userId) {
+    static async findAllTransactions(catId) {
         try {
-            const { rows } = await client.query('SELECT * FROM "category" WHERE user_id=$1', [userId]);
+            const { rows } = await client.query('SELECT * FROM "transaction" WHERE category_id=$1', [catId]);
 
-            if (rows) return rows.map(row => new Category(row));
+            if (rows) return rows.map(row => new Transaction(row));
             else return null;
 
         } catch (error) {
@@ -44,14 +44,15 @@ class Transaction {
 
     };
 
-    static async findCategoryById(catId, userId) {
+    static async findTransactionById(transactionId, catId) {
         try {
-            const { rows } = await client.query('SELECT * FROM "category" WHERE id=$1 AND user_id=$2', [catId, userId]);
+            const { rows } = await client.query('SELECT * FROM "transaction" WHERE id=$1 AND category_id=$2', [transactionId, catId]);
 
             if (rows[0]) {
-                const category = new Category(rows[0]);
-                return category;
+                const transaction = new Transaction(rows[0]);
+                return transaction;
             }
+
         } catch (error) {
             if (error.detail) {
                 throw new Error(error.detail);

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const client = require('../database');
 const bcrypt = require('bcryptjs');
 
@@ -12,7 +13,7 @@ class User {
     async save() {
         try {
             const email = await this.email.toLowerCase();
-            const password = await bcrypt.hash(this.password, 10);
+            const password = await bcrypt.hash(this.password, parseInt(process.env.BCRYPT_SALT, 10));
             const { rows } = await client.query('INSERT INTO "user"(username, email, password) VALUES($1, $2, $3) RETURNING id', [
                 this.username,
                 email,
@@ -86,7 +87,7 @@ class User {
     async update() {
         try {
             const email = await this.email.toLowerCase();
-            const password = await bcrypt.hash(this.password, 10);
+            const password = await bcrypt.hash(this.password, parseInt(process.env.BCRYPT_SALT, 10));
 
             const { rows } = await client.query(`UPDATE "user" SET username=$1, email=$2, password=$3 WHERE id=$4 RETURNING *`, [
                 this.username,
