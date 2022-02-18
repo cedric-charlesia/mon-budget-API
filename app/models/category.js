@@ -69,7 +69,7 @@ class Category {
             const { rows } = await client.query(`UPDATE "category" SET tag=$1, type=$2, user_id=$3 WHERE id=$4 RETURNING *`, [
                 tag,
                 type,
-                this.userId,
+                this.user_id,
                 catId
             ]);
             if (rows[0] !== undefined) return rows[0];

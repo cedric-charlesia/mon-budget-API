@@ -33,19 +33,25 @@ exports.findTransactionById = async (request, response) => {
 
 exports.update = async (request, response) => {
 
-    try {
-        const catId = parseInt(request.params.catId, 10);
-        const transactionId = parseInt(request.params.transactionId, 10);
-        const transaction = await new Transaction(request.body).update(catId, transactionId);
+    const transactionId = parseInt(request.params.transactionId, 10);
+    const catId = parseInt(request.params.catId, 10);
 
-        if (transaction === null) {
-            response.status(400).json(`No transaction found for this id ${transactionId}`)
+    if (request.body.category_id === catId) {
+        try {
+            const transaction = await new Transaction(request.body).update(catId, transactionId);
+    
+            if (transaction === null) {
+                response.status(400).json(`No transaction found for this id ${transactionId}`)
+            }
+            else { response.status(200).json("Transaction updated"); }
+    
+        } catch (error) {
+            response.status(500).json(error.message);
         }
-        else { response.status(200).json("Transaction updated"); }
-
-    } catch (error) {
-        response.status(500).json(error.message);
     }
+
+    else return response.status(400).json("This transaction was not found for this category");
+
 };
 
 exports.delete = async (request, response) => {
