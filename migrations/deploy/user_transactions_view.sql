@@ -13,6 +13,7 @@ CREATE OR REPLACE VIEW user_transactions AS (
     FROM "transaction"
 	JOIN category ON category.id = "transaction".category_id
 	JOIN "user" ON "user".id = "category".user_id
+	ORDER BY "date" DESC
 );
 
 COMMIT;

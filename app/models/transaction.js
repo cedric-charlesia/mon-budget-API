@@ -68,6 +68,7 @@ class Transaction {
                 const transaction = new Transaction(rows[0]);
                 return transaction;
             }
+            else return null;
 
         } catch (error) {
             if (error.detail) {

@@ -21,7 +21,7 @@ exports.findAllTransactions = async (request, response) => {
 
     const userId = parseInt(request.userId, 10);
 
-    if (userId) {
+    if (userId === parseInt(request.params.userId, 10)) {
         const transactions = await Transaction.findAllTransactions(userId);
         if (transactions.length === 0) {
             response.status(400).json(`No transactions found for this user id ${userId}`)
@@ -36,7 +36,7 @@ exports.findAllTransactionsByCategories = async (request, response) => {
     const catId = parseInt(request.params.catId, 10);
     const userId = parseInt(request.userId, 10);
 
-    if (userId) {
+    if (userId === parseInt(request.params.userId, 10)) {
         const transactions = await Transaction.findAllTransactionsByCategories(catId, userId);
         if (transactions.length === 0) {
             response.status(400).json(`No transactions found for this id ${catId}`)
@@ -51,8 +51,16 @@ exports.findTransactionById = async (request, response) => {
     const catId = parseInt(request.params.catId, 10);
     const userId = parseInt(request.userId, 10);
 
-    const transaction = await Transaction.findTransactionById(transactionId, catId, userId);
-    response.json(transaction);
+    try {
+        const transaction = await Transaction.findTransactionById(transactionId, catId, userId);
+        if (transaction === null) {
+            response.status(400).json(`No transaction found for this id ${transactionId}`)
+        }
+        else { response.status(200).json(transaction); }
+
+    } catch (error) {
+        response.status(500).json(error.message);
+    }
 
 };
 
