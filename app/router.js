@@ -43,7 +43,8 @@ router.delete('/user/:userId(\\d+)/categories/:catId(\\d+)', jwtMW, userMW, cate
 
 // TRANSACTIONS ROUTES
 router.post('/user/:userId(\\d+)/categories/:catId(\\d+)/transactions', jwtMW, userMW, validateBody(schema.transaction), transactionController.addTransaction);
-router.get('/user/:userId(\\d+)/categories/:catId(\\d+)/transactions', jwtMW, userMW, transactionController.findAllTransactions);
+router.get('/user/:userId(\\d+)/transactions', jwtMW, userMW, transactionController.findAllTransactions);
+router.get('/user/:userId(\\d+)/categories/:catId(\\d+)/transactions', jwtMW, userMW, transactionController.findAllTransactionsByCategories);
 router.get('/user/:userId(\\d+)/categories/:catId(\\d+)/transactions/:transactionId(\\d+)', jwtMW, userMW, transactionController.findTransactionById);
 
 router.patch('/user/:userId(\\d+)/categories/:catId(\\d+)/transactions/:transactionId(\\d+)', jwtMW, userMW, validateBody(schema.transaction), transactionController.update);

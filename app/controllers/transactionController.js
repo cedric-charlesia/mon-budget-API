@@ -19,22 +19,39 @@ exports.addTransaction = async (request, response) => {
 
 exports.findAllTransactions = async (request, response) => {
 
-    const catId = parseInt(request.params.catId, 10);
-    
-    const transactions = await Transaction.findAllTransactions(catId);
-    if (transactions.length === 0) {
-        response.status(400).json(`No transactions found for this id ${catId}`)
-    }
-    else response.json(transactions);
+    const userId = parseInt(request.userId, 10);
 
+    if (userId) {
+        const transactions = await Transaction.findAllTransactions(userId);
+        if (transactions.length === 0) {
+            response.status(400).json(`No transactions found for this user id ${userId}`)
+        }
+        else response.json(transactions);
+    }
+
+};
+
+exports.findAllTransactionsByCategories = async (request, response) => {
+
+    const catId = parseInt(request.params.catId, 10);
+    const userId = parseInt(request.userId, 10);
+
+    if (userId) {
+        const transactions = await Transaction.findAllTransactionsByCategories(catId, userId);
+        if (transactions.length === 0) {
+            response.status(400).json(`No transactions found for this id ${catId}`)
+        }
+        else response.json(transactions);
+    }
 };
 
 exports.findTransactionById = async (request, response) => {
 
     const transactionId = parseInt(request.params.transactionId, 10);
     const catId = parseInt(request.params.catId, 10);
+    const userId = parseInt(request.userId, 10);
 
-    const transaction = await Transaction.findTransactionById(transactionId, catId);
+    const transaction = await Transaction.findTransactionById(transactionId, catId, userId);
     response.json(transaction);
 
 };
