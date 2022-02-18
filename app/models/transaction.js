@@ -85,7 +85,7 @@ class Transaction {
 
     async delete(transactionId, catId) {
         try {
-            const { rows } = await client.query(`SELECT * FROM "transaction" WHERE id=$1 `, [transactionId]);
+            const { rows } = await client.query(`SELECT * FROM "transaction" WHERE id=$1 AND category_id=$2`, [transactionId, catId]);
             if (rows[0]) {
                 await client.query(`DELETE FROM "transaction" WHERE id=$1 AND category_id=$2`, [transactionId, catId]);
             }

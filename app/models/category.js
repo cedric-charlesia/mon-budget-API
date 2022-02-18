@@ -53,6 +53,8 @@ class Category {
                 const category = new Category(rows[0]);
                 return category;
             }
+            else return null;
+
         } catch (error) {
             if (error.detail) {
                 throw new Error(error.detail);
@@ -83,9 +85,9 @@ class Category {
         }
     };
 
-    async delete(catId) {
+    async delete(catId, userId) {
         try {
-            const { rows } = await client.query(`SELECT * FROM "category" WHERE id=$1`, [catId]);
+            const { rows } = await client.query(`SELECT * FROM "category" WHERE id=$1 AND user_id=$2`, [catId, userId]);
             if (rows[0]) {
                 await client.query(`DELETE FROM "category" WHERE id=$1`, [catId]);
             }
