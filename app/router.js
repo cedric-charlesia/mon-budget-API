@@ -29,6 +29,7 @@ router.post('/login', validateBody(schema.login), userController.login);
 
 router.get('/user/:userId(\\d+)', jwtMW, userMW, userController.findById);
 router.get('/tokenaccess', jwtMW, userController.verifyToken);
+router.get('/user/:userId(\\d+/logout)', jwtMW, userMW, userController.logout);
 
 router.patch('/user/:userId(\\d+)', jwtMW, userMW, validateBody(schema.register), userController.update);
 router.delete('/user/:userId(\\d+)', jwtMW, userMW, userController.delete);

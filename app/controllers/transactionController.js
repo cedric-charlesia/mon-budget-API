@@ -23,10 +23,11 @@ exports.findAllTransactions = async (request, response) => {
 
     if (userId === parseInt(request.params.userId, 10)) {
         const transactions = await Transaction.findAllTransactions(userId);
-        if (transactions.length === 0) {
-            response.status(400).json(`No transactions found for this user id ${userId}`)
-        }
-        else response.json(transactions);
+        // if (transactions.length === 0) {
+        //     response.status(400).json(`No transactions found for this user id ${userId}`)
+        // }
+        // else response.json(transactions);
+        response.json(transactions);
     }
 
 };

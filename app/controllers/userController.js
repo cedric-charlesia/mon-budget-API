@@ -59,6 +59,20 @@ exports.verifyToken = async (request, response) => {
     }
 };
 
+exports.logout = async (request, response) => {
+
+    if (request.userId) {
+
+        const token = jwt.deleteToken(request.userId);
+        response.setHeader("Access-Control-Expose-Headers", [
+            "Authorization"
+        ]);
+        response.setHeader('Authorization', token);
+        response.json('Please login');
+
+    }
+};
+
 exports.update = async (request, response) => {
     const id = parseInt(request.params.userId, 10);
 

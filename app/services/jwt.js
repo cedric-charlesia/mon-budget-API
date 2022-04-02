@@ -30,4 +30,21 @@ exports.validateToken = (token) => {
     } catch (error) {
         throw error;
     }
-}
+};
+
+exports.deleteToken = (userId) => {
+    try {
+        return JWT.sign(
+            {
+                data: userId
+            },
+            process.env.JWT_SECRET,
+            {
+                algorithm: 'HS256',
+                expiresIn: '1'
+            }
+        );
+    } catch (error) {
+        throw error;
+    }
+};
