@@ -2,4 +2,5 @@
 %project=budget
 
 init 2022-02-12T16:36:56Z cedric-charlesia <ccharlesia@gmail.com> # Database initialization
+add_check_transaction 2022-02-04T12:57:26Z cedric-charlesia <ccharlesia@gmail.com> # Add a check colum to transaction table
 user_transactions_view 2022-02-18T09:11:42Z cedric-charlesia <ccharlesia@gmail.com> # Create a view for user transactions

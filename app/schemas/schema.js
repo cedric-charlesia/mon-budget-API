@@ -48,8 +48,9 @@ const transaction = {
         description: { type: "string" },
         amount: { type: "number" },
         category_id: { type: "integer" },
+        check: { type: "string" },
     },
-    required: ["date", "amount", "category_id"],
+    required: ["date", "amount", "category_id", "check"],
     additionalProperties: false
 }
 

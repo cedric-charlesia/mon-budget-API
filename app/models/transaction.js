@@ -11,13 +11,14 @@ class Transaction {
     async save(catId) {
         try {
             const { rows } = await client.query(`
-            INSERT INTO "transaction"("date", description, amount, category_id) 
-                SELECT $1, $2, $3, $4 WHERE NOT EXISTS (
-                    SELECT * FROM "transaction" WHERE "date"=$1 AND "description"=$2 AND amount=$3 AND category_id=$4) RETURNING id`, [
+            INSERT INTO "transaction"("date", description, amount, category_id, "check") 
+                SELECT $1, $2, $3, $4, $5 WHERE NOT EXISTS (
+                    SELECT * FROM "transaction" WHERE "date"=$1 AND "description"=$2 AND amount=$3 AND category_id=$4 AND "check"=$5) RETURNING id`, [
                 this.date,
                 this.description,
                 this.amount,
-                catId
+                catId,
+                "false"
             ]);
             this.id = rows[0].id;
         } catch (error) {
@@ -82,11 +83,12 @@ class Transaction {
     async update(catId, transactionId) {
         try {
             const description = await this.description.toLowerCase();
-            const { rows } = await client.query(`UPDATE "transaction" SET date=$1, description=$2, amount=$3, category_id=$4 WHERE id=$5 RETURNING *`, [
+            const { rows } = await client.query(`UPDATE "transaction" SET date=$1, description=$2, amount=$3, category_id=$4, "check"=$5 WHERE id=$6 RETURNING *`, [
                 this.date,
                 description,
                 this.amount,
                 catId,
+                this.check,
                 transactionId
             ]);
             if (rows[0] !== undefined) return rows[0];

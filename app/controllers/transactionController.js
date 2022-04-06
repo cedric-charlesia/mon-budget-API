@@ -77,7 +77,7 @@ exports.update = async (request, response) => {
             if (transaction === null) {
                 response.status(400).json(`No transaction found for this id ${transactionId}`)
             }
-            else { response.status(200).json("Transaction updated"); }
+            else { response.status(200).json(transaction); }
 
         } catch (error) {
             response.status(500).json(error.message);
