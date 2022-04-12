@@ -15,7 +15,7 @@ exports.signup = async (request, response) => {
         await user.save();
         response.status(201).json(user);
     } catch (error) {
-        response.status(500).json(error.message);
+        response.status(204).json();
     }
 
 };
@@ -32,7 +32,7 @@ exports.login = async (request, response) => {
 
         response.status(200).json(user);
     } catch (error) {
-        response.status(500).json(error.message);
+        response.status(204).json();
     }
 };
 
