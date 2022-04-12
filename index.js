@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 
+
 const router = require('./app/router');
 
 //---CORS
@@ -20,6 +21,8 @@ const port = process.env.PORT || 5000;
 const cleaner = require('./app/middlewares/cleaner')
 
 app.use(cleaner);
+
+app.use(history());
 
 app.use(express.json());
 
