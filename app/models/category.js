@@ -31,7 +31,7 @@ class Category {
 
     static async findAllCategories(userId) {
         try {
-            const { rows } = await client.query('SELECT * FROM "category" WHERE user_id=$1', [userId]);
+            const { rows } = await client.query('SELECT * FROM "category" WHERE user_id=$1 ORDER BY "tag" ASC', [userId]);
 
             if (rows) return rows.map(row => new Category(row));
             else return null;
