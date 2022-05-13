@@ -31,7 +31,10 @@ class Transaction {
 
     static async findAllTransactions(userId) {
         try {
-            const { rows } = await client.query('SELECT * FROM "user_transactions" WHERE user_id=$1', [userId]);
+            const { rows } = await client.query(`SELECT
+            "id",
+            SUBSTRING(("date"::text) FROM 1 FOR 10) AS date,
+            * FROM "user_transactions" WHERE user_id=$1`, [userId]);
 
             if (rows) return rows.map(row => new Transaction(row));
             else return null;

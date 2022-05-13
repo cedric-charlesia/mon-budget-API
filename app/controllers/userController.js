@@ -8,7 +8,7 @@ exports.signup = async (request, response) => {
     const { email } = user;
     const validEmail = await user.findByEmail(email);
     if (validEmail) {
-        return response.status(403).json('This email has already been used');
+        return response.status(200).json({invalidEmailStatusCode: 409, message: 'This email has already been used'});
     }
 
     try {
@@ -32,7 +32,7 @@ exports.login = async (request, response) => {
 
         response.status(200).json(user);
     } catch (error) {
-        response.status(204).json();
+        response.status(200).json({invalidUserStatusCode: 204, message: 'No user found with this email and/or password'});
     }
 };
 
