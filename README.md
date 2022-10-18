@@ -10,10 +10,12 @@ L'API permet :
 
 ## Lancer le projet en développement
 **`npm install`** pour installer les dépendences nécessaires au projet
+
 **`npm run dev`** dans le répertoire à la racine du projet
 
 ## Lancer le projet en production
 **`npm install`** pour installer les dépendences nécessaires au projet
+
 **`npm start`** dans le répertoire à la racine du projet
 
 ## Installer la base de données
