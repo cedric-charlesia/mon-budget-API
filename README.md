@@ -1,4 +1,4 @@
-# mon-budget-API
+# Mon Budget API
 Une API web pour le suivi des dépenses personnelles.
 
 ## Les fonctionnalités
