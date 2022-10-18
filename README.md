@@ -1,19 +1,24 @@
 # mon-budget-API
-Une application web pour suivre ses dépenses
+Une API web pour le suivi des dépenses personnelles.
 
-L'API Mon Budget a été développée avec :
-- Node.js et le framework Express
-- PostgreSQL pour la conception de la base de données
+## Les fonctionnalités
+L'API permet :
+- La récupération des catégories des transactions en base de données
+- L'inscription et la connexion des utilisateurs
+- La possibilité pour les utilisateurs de modifier et/ou supprimer leur profil
+- La possibilité pour les utilisateurs de modifier et/où supprimer leurs catégories et leurs transactions
 
 ## Lancer le projet en développement
+**`npm install`** pour installer les dépendences nécessaires au projet
 **`npm run dev`** dans le répertoire à la racine du projet
 
 ## Lancer le projet en production
+**`npm install`** pour installer les dépendences nécessaires au projet
 **`npm start`** dans le répertoire à la racine du projet
 
 ## Installer la base de données
 La base de données est versionnée avec l'outil [Sqitch](https://sqitch.org/).
-- Pour la déployer, après configuration de Sqitch :
+- Pour la déployer (après configuration de Sqitch) :
 **`sqitch deploy`**
 - Pour revenir en arrière :
 **`sqitch revert`**
@@ -22,9 +27,6 @@ La base de données est versionnée avec l'outil [Sqitch](https://sqitch.org/).
 - Pour ajouter une nouvelle migration :
 **`sqitch add nom-de-la-migration`**
 
-## Les fonctionnalités
-L'API permet :
-- La récupération des catégories des transactions en base de données
-- L'inscription et la connexion des utilisateurs
-- La possibilité pour les utilisateurs de modifier et/ou supprimer leur profil
-- La possibilité pour les utilisateurs de modifier et/où supprimer leurs catégories et leurs transactions
+L'API Mon Budget a été développée avec :
+- Node.js et le framework Express
+- PostgreSQL pour la base de données
